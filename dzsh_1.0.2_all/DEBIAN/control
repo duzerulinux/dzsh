@@ -1,0 +1,11 @@
+Package: dzsh
+Version: 1.0.2
+Architecture: all
+Maintainer: Claudio A. Silva <claudiosilva@duzeru.org>
+Installed-Size: 773
+Depends: zsh, fonts-powerline
+Section: other
+Priority: required
+Homepage: http://duzeru.org
+Description: Personalização do Terminal.
+ Fork zsh and oh-my-zsh for DuZeru and Debian derivates.

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+rm -R /home/lost+found
+#echo "busca usuarios, cria script copia de diretorio"
+ls /home/ | awk '{print "cp -Rf /etc/skel/.oh-my-zsh /home/" $1 "/"}' | cat >/tmp/userszsh.sh
+ls /home/ | awk '{print "cp -Rf /etc/skel/.zsh_history /home/" $1 "/"}' | cat >>/tmp/userszsh.sh
+ls /home/ | awk '{print "cp -Rf /etc/skel/.zshrc /home/" $1 "/"}' | cat >>/tmp/userszsh.sh
+ls /home/ | awk '{print "cp -Rf /etc/skel/.zsh-update /home/" $1 "/"}' | cat >>/tmp/userszsh.sh
+
+#echo "busca usuarios, cria script altera permissoes"
+ls /home/ | awk '{print "chown -R " $1 ":" $1 " /home/"$1"/.oh-my-zsh"}' | cat >>/tmp/userszsh.sh
+ls /home/ | awk '{print "chown -R " $1 ":" $1 " /home/"$1"/.zsh_history"}' | cat >>/tmp/userszsh.sh
+ls /home/ | awk '{print "chown -R " $1 ":" $1 " /home/"$1"/.zshrc"}' | cat >>/tmp/userszsh.sh
+ls /home/ | awk '{print "chown -R " $1 ":" $1 " /home/"$1"/.zsh-update"}' | cat >>/tmp/userszsh.sh
+
+#Altera o bash dos usuários 
+ls /home/ | awk '{print "chsh " $1 " -s /bin/zsh"}' | cat >>/tmp/userszsh.sh
+chsh root -s /bin/zsh
+
+#echo "permissoes nos arquivos para novos users"
+chmod -R 755 /etc/skel/.oh-my-zsh
+chmod -R 755 /etc/skel/.zsh_history
+chmod -R 755 /etc/skel/.zshrc
+chmod -R 755 /etc/skel/.zsh-update
+
+#echo "permissoes para execucao do script criado no dir tmp"
+chmod 777 /tmp/userszsh.sh
+
+/tmp/userszsh.sh
+
+echo "## Operação concluida ##"
+echo "Acesse: http://duzeru.org"
